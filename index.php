@@ -5,9 +5,11 @@ $db = new database();
 $username 	= 'umi777';
 $tblname = 'phonebook';
 
-if (isset($_POST[delete])) {echo "Был удален ";
- ($db->delContact($tblname ,$_POST[delete]));
-echo " контакт";}
+if (isset($_POST["delete"])) {
+    echo "Был удален ";
+    ($db->delContact($tblname, $_POST["delete"]));
+    echo " контакт";
+}
 
 ?>
 	
@@ -26,15 +28,15 @@ echo " контакт";}
 		<div>
 	<div class="" id="form_add">
 		<div class="header" id="">
-			<h1>Добавить&nbsp;контакт</h1>
+			<h1>Добавить контакт</h1>
 		</div>
 		<form id="add_phone" name="myform" action="" method="post">
 		<fieldset>
 				<div class="name" id="name">
-					<input placeholder="Имя" type="text" name="name" value="<?=($_POST['name']?? false)?>" required />
+					<input placeholder="Имя" type="text" name="name" value="<?=($_POST["name"]?? false)?>" required />
 				</div>
 				<div class="phone" id="phone">
-					<input placeholder="+79876543210" type="phone" name="phone"  value="<?=($_POST['phone']?? false)?>" required />
+					<input placeholder="+79876543210" type="phone" name="phone"  value="<?=($_POST["phone"]?? false)?>" required />
 				</div>
 				<div class="submit" id="submit">
 					<input type="submit" name="add_phone" value="Добавить" />
@@ -49,18 +51,18 @@ echo " контакт";}
 		</div>
 		<div class="" id="list_contact">
 			<!--<form action="" method="post"> -->
-				<?php 
-					$list = $db->listContact($tblname);
-					foreach ($list as $arr) {
-						echo '<div class="contact">';
-						echo '<span class="name">'.($arr[name]).'</span>';
-						echo '<span class="del" onclick="ajaxRequest('.$arr[ID].')">x</span>';
-						echo '<br>';
-						echo '<span class="phone">'.$arr[phone].'</span>';
-						echo '</div>';
-						}
-					
-				?>
+				<?php
+                    $list = $db->listContact($tblname);
+foreach ($list as $arr) {
+    echo '<div class="contact">';
+    echo '<span class="name">'.($arr["name"]).'</span>';
+    echo '<span class="del" onclick="ajaxRequest('.$arr["ID"].')">x</span>';
+    echo '<br>';
+    echo '<span class="phone">'.$arr["phone"].'</span>';
+    echo '</div>';
+}
+
+?>
 			<!--</form>-->
 		</div>
 		<div id="list_footer"></div>
@@ -69,9 +71,9 @@ echo " контакт";}
 	</div>
 </body>
 </html>
-<?php 
-if (isset($_POST[add_phone])) {
-	echo ($db->addContact($tblname ,$_POST));
-	echo ("<script>ajaxRequest('list');</script>");
+<?php
+if (isset($_POST["add_phone"])) {
+    echo($db->addContact($tblname, $_POST));
+    echo("<script>ajaxRequest('list');</script>");
 }
 ?>
