@@ -2,7 +2,7 @@
 
 include_once(__DIR__ . '/db.php');
 $db = new database();
-$username 	= 'umi777';
+$username = 'umi777';
 $tblname = 'phonebook';
 
 if (isset($_POST["delete"])) {
@@ -22,6 +22,7 @@ if (isset($_POST["delete"])) {
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/style.css?v=1.020" />
 	<script type="text/javascript" src="js/js.js"></script>
+	<script type="text/javascript" src="js/js-inputmask.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -36,7 +37,7 @@ if (isset($_POST["delete"])) {
 					<input placeholder="Имя" type="text" name="name" value="<?=($_POST["name"]?? false)?>" required />
 				</div>
 				<div class="phone" id="phone">
-					<input placeholder="+79876543210" type="phone" name="phone"  value="<?=($_POST["phone"]?? false)?>" required />
+					<input placeholder="+7-987-654-32-10" type="phone" name="phone" pattern="\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}" class="tel" value="<?=($_POST["phone"]?? false)?>" required />
 				</div>
 				<div class="submit" id="submit">
 					<input type="submit" name="add_phone" value="Добавить" />
@@ -51,18 +52,8 @@ if (isset($_POST["delete"])) {
 		</div>
 		<div class="" id="list_contact">
 			<!--<form action="" method="post"> -->
-				<?php
-                    $list = $db->listContact($tblname);
-foreach ($list as $arr) {
-    echo '<div class="contact">';
-    echo '<span class="name">'.($arr["name"]).'</span>';
-    echo '<span class="del" onclick="ajaxRequest('.$arr["ID"].')">x</span>';
-    echo '<br>';
-    echo '<span class="phone">'.$arr["phone"].'</span>';
-    echo '</div>';
-}
+				<script>ajaxRequest("list")</script>
 
-?>
 			<!--</form>-->
 		</div>
 		<div id="list_footer"></div>
@@ -74,6 +65,6 @@ foreach ($list as $arr) {
 <?php
 if (isset($_POST["add_phone"])) {
     echo($db->addContact($tblname, $_POST));
-    echo("<script>ajaxRequest('list');</script>");
+    //echo ("<script>ajaxRequest('list');</script>");
 }
 ?>
